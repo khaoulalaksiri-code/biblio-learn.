@@ -3,6 +3,7 @@
 {% block title %}À propos - BiblioLearn{% endblock %}
 
 {% block content %}
+
 <h2>À propos de BiblioLearn</h2>
 
 <p>BiblioLearn est une plateforme de bibliothèque en ligne.</p>
@@ -10,5 +11,14 @@
 
 <p>Version : {{ version_projet }}</p>
 
+<h3>Notre équipe</h3>
+
+<ul>
+    {% for membre in equipe %}
+        <li>{{ membre.nom }} - {{ membre.role }}</li>
+    {% endfor %}
+</ul>
+
 <a href="{% url 'pages:accueil' %}">Retour à l'accueil</a>
+
 {% endblock %}

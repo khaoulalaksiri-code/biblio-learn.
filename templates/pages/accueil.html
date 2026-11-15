@@ -16,4 +16,10 @@
     {% endfor %}
 </ul>
 
+{% if nb_ressources == 0 %}
+    <p>Aucune ressource disponible pour le moment.</p>
+{% else %}
+    <p>Nombre de ressources : {{ nb_ressources }}</p>
+{% endif %}
+
 {% endblock %}

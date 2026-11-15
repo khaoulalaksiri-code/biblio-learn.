@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block title %}Contact - BiblioLearn{% endblock %}
+
+{% block content %}
+
+<h2>Contactez-nous</h2>
+
+{% if envoye %}
+    <p>Merci {{ nom }}, votre message a bien été reçu.</p>
+{% else %}
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Envoyer</button>
+    </form>
+{% endif %}
+
+{% endblock %}
