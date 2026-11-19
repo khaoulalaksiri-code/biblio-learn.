@@ -1,0 +1,75 @@
+
+{% extends "base.html" %}
+
+{% block title %}Catalogue - BiblioLearn{% endblock %}
+
+{% block content %}
+
+    {% if categorie %}
+        <h2>Catalogue : {{ categorie.nom }}</h2>
+    {% else %}
+        <h2>Catalogue</h2>
+    {% endif %}
+
+    <p>
+        <a href="{% url 'catalogue:categories' %}">Voir les catégories</a>
+    </p>
+
+    {% if not categorie %}
+        <form method="GET">
+            <input
+                type="text"
+                name="q"
+                placeholder="Rechercher une ressource..."
+                value="{{ q }}"
+            >
+            <button type="submit">Rechercher</button>
+        </form>
+    {% endif %}
+
+    <p>{{ ressources|length }} ressource(s) trouvée(s).</p>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Titre</th>
+                <th>Type</th>
+                <th>Catégorie</th>
+                <th>Année</th>
+                <th>Disponibilité</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for ressource in ressources %}
+            <tr>
+                <td>
+                    <a href="{% url 'catalogue:detail' ressource.pk %}">
+                        {{ ressource.titre }}
+                    </a>
+                </td>
+                <td>{{ ressource.get_type_ressource_display }}</td>
+                <td>{{ ressource.categorie.nom }}</td>
+                <td>{{ ressource.annee|default:"-" }}</td>
+                <td>
+                    {% if ressource.disponible %}
+                        <span class="badge badge-ok">Disponible</span>
+                    {% else %}
+                        <span class="badge badge-ko">Indisponible</span>
+                    {% endif %}
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="5">Aucune ressource pour le moment.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    {% if categorie %}
+        <p>
+            <a href="{% url 'catalogue:categories' %}">Retour aux catégories</a>
+        </p>
+    {% endif %}
+
+{% endblock %}
